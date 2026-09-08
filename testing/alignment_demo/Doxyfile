@@ -1,0 +1,14 @@
+# Small Doxyfile for the //!< marker alignment demo.
+PROJECT_NAME           = "AlignmentDemo"
+OUTPUT_DIRECTORY       = out
+INPUT                  = two_lines.h three_lines.h matrix.h
+EXTRACT_ALL            = YES
+GENERATE_HTML          = YES
+GENERATE_XML           = YES
+GENERATE_LATEX         = NO
+QUIET                  = YES
+
+# Default values, repeated here because they matter for this demo.
+MULTILINE_CPP_IS_BRIEF = NO
+JAVADOC_AUTOBRIEF      = NO
+QT_AUTOBRIEF           = NO
