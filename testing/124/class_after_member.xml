@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="" xml:lang="en-US">
+  <compounddef id="class_after_member" kind="class" language="C++" prot="public">
+    <compoundname>AfterMember</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_after_member_1a6ac8361b1f53b0774fea2b474ee6d59c" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int AfterMember::twoAligned</definition>
+        <argsstring/>
+        <name>twoAligned</name>
+        <qualifiedname>AfterMember::twoAligned</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+          <para>Line 1. Line 2. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="124_member_comment_alignment.cpp" line="20" column="9" bodyfile="124_member_comment_alignment.cpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_after_member_1ae85a9fd58b72ff9d64bfdfa8d451f492" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int AfterMember::twoMisaligned</definition>
+        <argsstring/>
+        <name>twoMisaligned</name>
+        <qualifiedname>AfterMember::twoMisaligned</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+          <para>Line 1. Line 2. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="124_member_comment_alignment.cpp" line="24" column="9" bodyfile="124_member_comment_alignment.cpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_after_member_1a55ce5f8cfca1a8c8e981ba030ad52cd0" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int AfterMember::threeLastOut</definition>
+        <argsstring/>
+        <name>threeLastOut</name>
+        <qualifiedname>AfterMember::threeLastOut</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+          <para>Line 1. Line 2. Line 3. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="124_member_comment_alignment.cpp" line="28" column="9" bodyfile="124_member_comment_alignment.cpp" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_after_member_1ac55f83def67c915f260ddbdd540803ba" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int AfterMember::jdAligned</definition>
+        <argsstring/>
+        <name>jdAligned</name>
+        <qualifiedname>AfterMember::jdAligned</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+          <para>Line 1. Line 2. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="124_member_comment_alignment.cpp" line="33" column="9" bodyfile="124_member_comment_alignment.cpp" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_after_member_1a924bd3b43650e4403b7834115885ab7f" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int AfterMember::jdMisaligned</definition>
+        <argsstring/>
+        <name>jdMisaligned</name>
+        <qualifiedname>AfterMember::jdMisaligned</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+          <para>Line 1. Line 2. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="124_member_comment_alignment.cpp" line="36" column="9" bodyfile="124_member_comment_alignment.cpp" bodystart="36" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+      <para>Blocks written after the member. </para>
+    </detaileddescription>
+    <location file="124_member_comment_alignment.cpp" line="16" column="1" bodyfile="124_member_comment_alignment.cpp" bodystart="17" bodyend="38"/>
+    <listofallmembers>
+      <member refid="class_after_member_1ac55f83def67c915f260ddbdd540803ba" prot="public" virt="non-virtual">
+        <scope>AfterMember</scope>
+        <name>jdAligned</name>
+      </member>
+      <member refid="class_after_member_1a924bd3b43650e4403b7834115885ab7f" prot="public" virt="non-virtual">
+        <scope>AfterMember</scope>
+        <name>jdMisaligned</name>
+      </member>
+      <member refid="class_after_member_1a55ce5f8cfca1a8c8e981ba030ad52cd0" prot="public" virt="non-virtual">
+        <scope>AfterMember</scope>
+        <name>threeLastOut</name>
+      </member>
+      <member refid="class_after_member_1a6ac8361b1f53b0774fea2b474ee6d59c" prot="public" virt="non-virtual">
+        <scope>AfterMember</scope>
+        <name>twoAligned</name>
+      </member>
+      <member refid="class_after_member_1ae85a9fd58b72ff9d64bfdfa8d451f492" prot="public" virt="non-virtual">
+        <scope>AfterMember</scope>
+        <name>twoMisaligned</name>
+      </member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

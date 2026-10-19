@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="" xml:lang="en-US">
+  <compounddef id="class_explicit_brief" kind="class" language="C++" prot="public">
+    <compoundname>ExplicitBrief</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_explicit_brief_1a40261b63af1c6e2ab7322519294e62be" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int ExplicitBrief::x</definition>
+        <argsstring/>
+        <name>x</name>
+        <qualifiedname>ExplicitBrief::x</qualifiedname>
+        <briefdescription>
+          <para>The real brief. </para>
+        </briefdescription>
+        <detaileddescription>
+          <para>Details first. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="124_member_comment_alignment.cpp" line="69" column="9" bodyfile="124_member_comment_alignment.cpp" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_explicit_brief_1a2a599d2b8326dd31f575b9c3062e61b2" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int ExplicitBrief::y</definition>
+        <argsstring/>
+        <name>y</name>
+        <qualifiedname>ExplicitBrief::y</qualifiedname>
+        <briefdescription>
+          <para>Brief description. </para>
+        </briefdescription>
+        <detaileddescription>
+          <para>Detailed description starts here. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="124_member_comment_alignment.cpp" line="75" column="9" bodyfile="124_member_comment_alignment.cpp" bodystart="75" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+      <para>An explicit \brief keeps the brief whatever comes before it. </para>
+    </detaileddescription>
+    <location file="124_member_comment_alignment.cpp" line="63" column="1" bodyfile="124_member_comment_alignment.cpp" bodystart="64" bodyend="76"/>
+    <listofallmembers>
+      <member refid="class_explicit_brief_1a40261b63af1c6e2ab7322519294e62be" prot="public" virt="non-virtual">
+        <scope>ExplicitBrief</scope>
+        <name>x</name>
+      </member>
+      <member refid="class_explicit_brief_1a2a599d2b8326dd31f575b9c3062e61b2" prot="public" virt="non-virtual">
+        <scope>ExplicitBrief</scope>
+        <name>y</name>
+      </member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

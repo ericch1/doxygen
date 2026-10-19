@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="" xml:lang="en-US">
+  <compounddef id="class_before_member" kind="class" language="C++" prot="public">
+    <compoundname>BeforeMember</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_before_member_1a7b9364aa1ba4f26c67c6a1c1e34baf89" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int BeforeMember::aligned</definition>
+        <argsstring/>
+        <name>aligned</name>
+        <qualifiedname>BeforeMember::aligned</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+          <para>Line 1. Line 2. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="124_member_comment_alignment.cpp" line="46" column="9" bodyfile="124_member_comment_alignment.cpp" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_before_member_1a7b183128386bb8e480752200b900788e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int BeforeMember::misaligned</definition>
+        <argsstring/>
+        <name>misaligned</name>
+        <qualifiedname>BeforeMember::misaligned</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+          <para>Line 1. Line 2. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="124_member_comment_alignment.cpp" line="50" column="9" bodyfile="124_member_comment_alignment.cpp" bodystart="50" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+      <para>Blocks written in front of the member. </para>
+    </detaileddescription>
+    <location file="124_member_comment_alignment.cpp" line="41" column="1" bodyfile="124_member_comment_alignment.cpp" bodystart="42" bodyend="51"/>
+    <listofallmembers>
+      <member refid="class_before_member_1a7b9364aa1ba4f26c67c6a1c1e34baf89" prot="public" virt="non-virtual">
+        <scope>BeforeMember</scope>
+        <name>aligned</name>
+      </member>
+      <member refid="class_before_member_1a7b183128386bb8e480752200b900788e" prot="public" virt="non-virtual">
+        <scope>BeforeMember</scope>
+        <name>misaligned</name>
+      </member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

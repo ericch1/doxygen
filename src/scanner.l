@@ -7516,17 +7516,17 @@ NONLopt [^\n]*
                                            lineCount(yyscanner);
                                         }
 <DocLine>{B}*{CPPC}"/"[/]+{Bopt}/"\n"         { // ignore marker line (see bug700345)
-                                          handleCommentBlock(yyscanner,yyextra->docBlock.str(),yyextra->current->brief.empty());
+                                          handleCommentBlock(yyscanner,yyextra->docBlock.str(),yyextra->current->brief.empty() && yyextra->current->doc.empty());
                                           BEGIN( yyextra->docBlockContext );
                                         }
 <DocLine>{NONLopt}/"\n"{B}*{CPPC}[!/]{B}*{CMD}"}"    { // next line is an end group marker, see bug 752712
                                           yyextra->docBlock << yytext;
-                                          handleCommentBlock(yyscanner,yyextra->docBlock.str(),yyextra->current->brief.empty());
+                                          handleCommentBlock(yyscanner,yyextra->docBlock.str(),yyextra->current->brief.empty() && yyextra->current->doc.empty());
                                           BEGIN( yyextra->docBlockContext );
                                         }
 <DocLine>{NONLopt}/"\n"                    { // whole line
                                           yyextra->docBlock << yytext;
-                                          handleCommentBlock(yyscanner,yyextra->docBlock.str(),yyextra->current->brief.empty());
+                                          handleCommentBlock(yyscanner,yyextra->docBlock.str(),yyextra->current->brief.empty() && yyextra->current->doc.empty());
                                           BEGIN( yyextra->docBlockContext );
                                         }
 
