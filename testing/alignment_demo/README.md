@@ -9,9 +9,8 @@ settings (`MULTILINE_CPP_IS_BRIEF = NO`, `JAVADOC_AUTOBRIEF = NO`,
 `QT_AUTOBRIEF = NO`).
 
 All the measurements below describe doxygen **before** the change, so that the
-report stands on its own. The change itself, and what it does to each setting,
-is in [The fix](#the-fix) further down. To reproduce the old behaviour, check
-out the parent of the commit that carries the fix.
+report stands on its own. Where the final fix is, and what happened to an
+earlier version of it, is in [The fix](#the-fix) further down.
 
 ## How to run
 
@@ -211,111 +210,24 @@ gets "reversed descriptions" — the order swap shown above.
 
 ## The fix
 
-`src/scanner.l`, at the three places where a one line comment block claims the
-brief:
+The final fix is on the branch `claude/issue-5266-member-comment-brief`, as one
+commit on top of `master`. Its commit message and the pull request description
+explain it. In short, in `replaceComment()` in `src/commentcnv.l`: when both the
+block and the misaligned line have a marker ending in `<`, the line still starts
+a new block, but as a C style `/*!< ... */` block, so it goes to the detailed
+description, in source order. Comments written above a member do not change.
 
-```c
-handleCommentBlock(yyscanner, yyextra->docBlock.str(),
-                   yyextra->current->brief.empty() && yyextra->current->doc.empty());
-```
-
-The second half of the guard is new. A one line block now becomes the brief
-only when the member has no description at all yet. Once a detailed
-description exists, a one line block that comes after it is added to that
-description instead.
-
-The same guard is already used in `src/commentscan.l` by `handleCopyBrief()`
-and `handleCopyDoc()`, with the comment "if we don't have a brief or detailed
-description yet, then the @copybrief should end up in the brief description".
-Same reasoning, same wording.
-
-### Why not in commentcnv
-
-`commentcnv` is where the block is split, so it looks like the place to fix
-this, and a narrower change there does work: a marker ending in `<` can only
-be about the member in front of it, so such a line can be kept in the current
-block whatever its column. But that only covers markers ending in `<`.
-
-The column test is a lexical stand-in for a question that is not lexical: do
-these two blocks document the same entity? It gets it right when an entity
-sits between them:
+An earlier version of this branch fixed it in `src/scanner.l` instead, by
+giving the brief to a one line block only when the member had no description
+yet. That was dropped: it also took the brief away from this documented use,
 
 ```cpp
-int a; //!< doc for a
-//! doc for b          // int b follows, so splitting here is what keeps
-int b;                 // the two descriptions apart
+/** A detailed description. */
+int x; ///< The brief description.
 ```
 
-and wrong when nothing does:
-
-```cpp
-//! Line 1.
-    //! Line 2.
-int misaligned;
-```
-
-`commentcnv` runs before anything is parsed, so it cannot tell the two apart.
-The brief is handed out later, where entities do exist, and that is where the
-question can be answered. Fixing it there covers both shapes at once and
-leaves `commentcnv` alone, which is welcome: `blockHeadCol` is shared by three
-unrelated jobs there, and that is how the 2024 change moved this behaviour by
-accident.
-
-### What else changes
-
-One shape beyond the bug:
-
-```cpp
-/*! A detailed description. */
-//! This line used to be the brief.
-int var;
-```
-
-The one line block is now added to the detailed description. This is the same
-shape as the bug, written on purpose, and nothing in the source distinguishes
-the two. `\brief` still works for this case and is the documented way to ask
-for a brief.
-
-Three shapes were checked and do not change: the block that belongs to the
-next member stays separate, an explicit `\brief` after `\details` keeps the
-brief, and the documented "brief, blank line, detailed" idiom is untouched.
-All three are in the test.
-
-### Test and manual
-
-`testing/124_member_comment_alignment.cpp` covers the after member shape, the
-before member shape and the three guards above. It fails without the change
-and passes with it.
-
-`doc/docblocks.dox` now says, in "Putting documentation after members", that a
-block may span several lines whatever column the markers start in, and states
-the rule about a one line block arriving after a detailed description.
-
-### Checked against the other settings
-
-Both `MULTILINE_CPP_IS_BRIEF` and the two `AUTOBRIEF` options change what a
-multi line comment means, so all eight combinations were compared before and
-after. The question asked of each one: does the aligned member give the same
-result as the misaligned member?
-
-| MULTILINE_CPP_IS_BRIEF | QT_AUTOBRIEF | JAVADOC_AUTOBRIEF | before | after |
-|---|---|---|---|---|
-| NO  | NO  | NO  | differs for `//!<` and `///<` | same |
-| NO  | NO  | YES | differs for `//!<` | same |
-| NO  | YES | NO  | differs for `///<` | same |
-| NO  | YES | YES | same | same |
-| YES | NO  | NO  | same | same |
-| YES | NO  | YES | same | same |
-| YES | YES | NO  | same | same |
-| YES | YES | YES | same | same |
-
-`MULTILINE_CPP_IS_BRIEF = YES` was already free of the problem. An `AUTOBRIEF`
-option only covers its own marker family, so with one of them on the other
-family still showed it. `QT_AUTOBRIEF` covers `//!` and `/*!`,
-`JAVADOC_AUTOBRIEF` covers `///` and `/**`.
-
-In every row where the two members already agreed, the output is byte for byte
-the same before and after.
+and the column of a comment above a member does carry information, for
+example for an indented member inside a group (`//! @{`).
 
 ## Which languages
 

@@ -1,10 +1,11 @@
 <!-- Draft of a comment to post on https://github.com/doxygen/doxygen/issues/5266 -->
 
-This issue is labelled `needinfo`, so here is what we found. It also answers the
-question left open in the last comment (2015-06-22), where the descriptions came
-out in a "reversed" order and nobody could say why.
+This issue is labelled `needinfo`, so here is what we found, and a fix in
+#PR_NUMBER. It also answers the question left open in the last comment
+(2015-06-22), where the descriptions came out in a "reversed" order and nobody
+could say why.
 
-Everything below was run with **doxygen 1.19.0, `master` at `ae4c402`**, built
+Everything below was run with **doxygen 1.19.0, `master` at `0a6fc33e`**, built
 from source, with **default settings** (`MULTILINE_CPP_IS_BRIEF = NO`,
 `JAVADOC_AUTOBRIEF = NO`, `QT_AUTOBRIEF = NO`).
 
@@ -220,21 +221,21 @@ class Matrix3
 };
 ```
 
-| case | layout | brief | detailed |
-|------|--------|-----------|-----------|
-| `a` | 2 lines, same column | *(empty)* | `Line 1. Line 2.` |
-| `b` | 2 lines, 13 columns to the left | `Line 2.` | `Line 1.` |
-| `c` | 2 lines, 3 columns to the right | `Line 2.` | `Line 1.` |
-| `d` | 2 lines, 1 column to the left | `Line 2.` | `Line 1.` |
-| `e` | 2 lines, **1 column to the right** | *(empty)* | `Line 1. Line 2.` |
-| `f` | same as `a` with `///<` | *(empty)* | `Line 1. Line 2.` |
-| `g` | same as `b` with `///<` | `Line 2.` | `Line 1.` |
-| `j` | 3 lines, same column | *(empty)* | `Line 1. Line 2. Line 3.` |
-| `k` | 3 lines, last two together out of line | *(empty)* | `Line 1. Line 2. Line 3.` |
-| `l` | 3 lines, only the third out of line | `Line 3.` | `Line 1. Line 2.` |
-| `m` | 3 lines, only the second out of line | `Line 3.` | `Line 1. Line 2.` |
-| `n` | 3 lines, three different columns | `Line 3.` | `Line 1. Line 2.` |
-| `o` | 4 lines, last three together out of line | *(empty)* | `Line 1. ... Line 4.` |
+| case | layout | brief | detailed | with #PR_NUMBER |
+|------|--------|-----------|-----------|------|
+| `a` | 2 lines, same column | *(empty)* | `Line 1. Line 2.` | same |
+| `b` | 2 lines, 13 columns to the left | `Line 2.` | `Line 1.` | like `a` |
+| `c` | 2 lines, 3 columns to the right | `Line 2.` | `Line 1.` | like `a` |
+| `d` | 2 lines, 1 column to the left | `Line 2.` | `Line 1.` | like `a` |
+| `e` | 2 lines, **1 column to the right** | *(empty)* | `Line 1. Line 2.` | same |
+| `f` | same as `a` with `///<` | *(empty)* | `Line 1. Line 2.` | same |
+| `g` | same as `b` with `///<` | `Line 2.` | `Line 1.` | like `a` |
+| `j` | 3 lines, same column | *(empty)* | `Line 1. Line 2. Line 3.` | same |
+| `k` | 3 lines, last two together out of line | *(empty)* | `Line 1. Line 2. Line 3.` | same |
+| `l` | 3 lines, only the third out of line | `Line 3.` | `Line 1. Line 2.` | like `j` |
+| `m` | 3 lines, only the second out of line | `Line 3.` | `Line 1. Line 2.` | like `j` |
+| `n` | 3 lines, three different columns | `Line 3.` | `Line 1. Line 2.` | like `j` |
+| `o` | 4 lines, last three together out of line | *(empty)* | `Line 1. ... Line 4.` | same |
 
 Two of these are worth a look.
 
@@ -307,32 +308,36 @@ jobs - the alignment test, re-indenting content inserted by `\include` and
 (`replaceAliases()`), and as a "am I inside a C comment" flag. There is no test
 in `testing/` covering marker alignment, so a change made for one of the other
 jobs can move this behaviour without anyone noticing. That already happened once.
+#PR_NUMBER adds tests for it.
 
-## Question
+## The fix
 
-Before proposing a patch we would like to know which output you want for the
-misaligned case:
+#PR_NUMBER gives the misaligned case the same output as the aligned one: no
+brief is created, and the lines stay in source order.
 
-1. **Same as the aligned case** - the continuation line joins the block, so no
-   brief is created and the lines stay in source order. A marker ending in `<`
-   can only document the member in front of it, so a following comment line can
-   only be about that same member; the column carries no information there. The
-   2003 rule would stay in force for `//!` and `///` comments in front of a
-   member, where it does carry information.
-2. **A brief plus a detailed part** - the first line becomes the brief and the
-   rest the detailed description. Note this only works when the first block is a
-   single line; in case `l` above the first block has two lines, so it cannot
-   provide a brief and the last line would still win.
-3. **No behaviour change, but a warning** when a block is split because a marker
-   is not in the same column as the previous one.
+A line whose marker ends in `<` can only document the member in front of it.
+So when both the block and the misaligned line have a `<` marker, the line still
+starts a new block, as before, but now as a C style `/*!< ... */` block, which
+goes to the detailed description. With `QT_AUTOBRIEF` or `JAVADOC_AUTOBRIEF`,
+the new block uses the style that the option does not apply to, so its first
+sentence does not become the brief either.
 
-We have a small patch for option 1, tested against the full `ctest` suite
-(122/123, the one failure is `012_cite` which needs `bibtex` and fails without
-the patch too) and against the layouts above. Happy to open a PR once you say
-which behaviour you prefer.
+What does not change:
 
-We can also send a documentation-only PR describing the rule in
-`doc/docblocks.dox`, independently of any code change.
+* The 2003 rule for `//!` and `///` comments in front of a member, where the
+  column does carry information, for example for an indented member inside a
+  group (`//! @{`).
+* A misaligned line without `<` after a member still documents what comes next.
+* A `\brief` paragraph, or the first sentence with AUTOBRIEF, still ends at the
+  misaligned line.
+
+With the fix, all the layouts in the table above give the same output as their
+aligned version. We also checked the two line case in C and Java. The PR has three new tests (128 to 130,
+also with each AUTOBRIEF option), a short note in `doc/docblocks.dox`, and a
+comparison on the XML output of ten real code bases: only 8 members changed,
+all of them this bug, in mbed-os. It also lists two known limits: both AUTOBRIEF
+options set together, and warning line numbers that are too high in such a
+block, as already happens today for several `/**<` blocks on separate lines.
 
 ---
 _Generated by [Claude Code](https://claude.ai/code)_
