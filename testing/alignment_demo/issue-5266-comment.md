@@ -1,7 +1,7 @@
 <!-- Draft of a comment to post on https://github.com/doxygen/doxygen/issues/5266 -->
 
 This issue is labelled `needinfo`, so here is what we found, and a fix in
-#PR_NUMBER. It also answers the question left open in the last comment
+#12412. It also answers the question left open in the last comment
 (2015-06-22), where the descriptions came out in a "reversed" order and nobody
 could say why.
 
@@ -221,7 +221,7 @@ class Matrix3
 };
 ```
 
-| case | layout | brief | detailed | with #PR_NUMBER |
+| case | layout | brief | detailed | with #12412 |
 |------|--------|-----------|-----------|------|
 | `a` | 2 lines, same column | *(empty)* | `Line 1. Line 2.` | same |
 | `b` | 2 lines, 13 columns to the left | `Line 2.` | `Line 1.` | like `a` |
@@ -308,11 +308,11 @@ jobs - the alignment test, re-indenting content inserted by `\include` and
 (`replaceAliases()`), and as a "am I inside a C comment" flag. There is no test
 in `testing/` covering marker alignment, so a change made for one of the other
 jobs can move this behaviour without anyone noticing. That already happened once.
-#PR_NUMBER adds tests for it.
+#12412 adds tests for it.
 
 ## The fix
 
-#PR_NUMBER gives the misaligned case the same output as the aligned one: no
+#12412 gives the misaligned case the same output as the aligned one: no
 brief is created, and the lines stay in source order.
 
 A line whose marker ends in `<` can only document the member in front of it.
